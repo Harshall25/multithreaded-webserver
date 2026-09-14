@@ -33,7 +33,7 @@ public class Server {
         Server server = new Server();
         try{
             ServerSocket socket = new ServerSocket(port);
-            socket.setSoTimeout(10000);
+            socket.setSoTimeout(20000);
             System.out.println("Serever is Listening on port :"+ port);
             while(true){
                 Socket acceptSocket = socket.accept();
@@ -41,8 +41,7 @@ public class Server {
                  * Thread.startVirtualThread(new Thread(()->server.getConsumer().accept(acceptSocket)));
                  * no need to thread.start();
                  */
-                Thread thread = new Thread(()->server.getConsumer().accept(acceptSocket));
-                thread.start();
+                Thread.startVirtualThread(() -> server.getConsumer().accept(acceptSocket));
             }
         }catch (Exception e) {
             throw new Exception(e);
